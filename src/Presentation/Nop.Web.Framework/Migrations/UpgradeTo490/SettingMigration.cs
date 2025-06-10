@@ -7,6 +7,7 @@ using Nop.Core.Domain.Media;
 using Nop.Core.Domain.Orders;
 using Nop.Core.Domain.Security;
 using Nop.Core.Domain.Customers;
+using Nop.Core.Domain.Localization;
 using Nop.Core.Domain.Tax;
 using Nop.Core.Domain.Vendors;
 using Nop.Core.Infrastructure;
@@ -14,6 +15,7 @@ using Nop.Data;
 using Nop.Data.Migrations;
 using Nop.Services.Common;
 using Nop.Services.Configuration;
+using Nop.Core.Domain.Translation;
 
 namespace Nop.Web.Framework.Migrations.UpgradeTo490;
 
@@ -185,6 +187,31 @@ public class SettingMigration : MigrationBase
         {
             addressSetting.PrePopulateCountryByCustomer = true;
             settingService.SaveSetting(addressSetting, settings => settings.PrePopulateCountryByCustomer);
+        }
+
+        //#7388
+        var translationSettings = settingService.LoadSetting<TranslationSettings>();
+        if (!settingService.SettingExists(translationSettings, settings => settings.AllowPreTranslate))
+        {
+            translationSettings.AllowPreTranslate = false;
+            settingService.SaveSetting(translationSettings, settings => settings.AllowPreTranslate);
+        }
+        if (!settingService.SettingExists(translationSettings, settings => settings.TranslateFromLanguageId))
+        {
+            var languageRepository = EngineContext.Current.Resolve<IRepository<Language>>();
+            
+            translationSettings.TranslateFromLanguageId = languageRepository.Table.First().Id;
+            settingService.SaveSetting(translationSettings, settings => settings.TranslateFromLanguageId);
+        }
+        if (!settingService.SettingExists(translationSettings, settings => settings.GoogleApiKey))
+        {
+            translationSettings.GoogleApiKey = string.Empty;
+            settingService.SaveSetting(translationSettings, settings => settings.GoogleApiKey);
+        }
+        if (!settingService.SettingExists(translationSettings, settings => settings.NotTranslateLanguages))
+        {
+            translationSettings.NotTranslateLanguages = new List<int>();
+            settingService.SaveSetting(translationSettings, settings => settings.NotTranslateLanguages);
         }
     }
 

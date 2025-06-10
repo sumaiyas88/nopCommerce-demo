@@ -258,6 +258,26 @@ public class LocalizationMigration : MigrationBase
             ["Account.ForumSubscriptions.Description"] = "You will receive an email when a new forum topic/post is created.",
             ["Admin.ContentManagement.MessageTemplates.Fields.BccEmailAddresses.Hint"] = "The blind carbon copy (BCC) recipients for this email message.",
             ["BackInStockSubscriptions.Tooltip"] = "You'll receive a onetime email when this product is available for ordering again. We will not send you any other emails or add you to our newsletter; you will only be emailed about this product!",
+
+            //#7388
+            ["Admin.Configuration.Settings.GeneralCommon.BlockTitle.Translation"] = "Translation",
+            ["Admin.Configuration.Settings.GeneralCommon.AllowPreTranslate"] = "Allow to pre-translate",
+            ["Admin.Configuration.Settings.GeneralCommon.AllowPreTranslate.Hint"] = "Check to allow pre-translate functionality.",
+            ["Admin.Configuration.Settings.GeneralCommon.TranslateFromLanguage"] = "Translate from the language",
+            ["Admin.Configuration.Settings.GeneralCommon.TranslateFromLanguage.Hint"] = "Set the base language to translate from.",
+            ["Admin.Configuration.Settings.GeneralCommon.NotTranslateLanguages"] = "Languages to ignore",
+            ["Admin.Configuration.Settings.GeneralCommon.NotTranslateLanguages.Hint"] = "You may specify the languages that will be ignored when pre-translating content.",
+            ["Admin.Configuration.Settings.GeneralCommon.GoogleTranslateApiKey"] = "API key",
+            ["Admin.Configuration.Settings.GeneralCommon.GoogleTranslateApiKey.Hint"] = "Set the Google Translate API key.",
+            ["Admin.Configuration.Settings.GeneralCommon.DeepLAuthKey"] = "Auth key",
+            ["Admin.Configuration.Settings.GeneralCommon.DeepLAuthKey.Hint"] = "Set the DeepL auth key.",
+            ["Admin.Configuration.Settings.GeneralCommon.TranslationService"] = "Translation service",
+            ["Admin.Configuration.Settings.GeneralCommon.TranslationService.Hint"] = "Choose the translation service which will be used for pre-translate functionality.",
+            ["Admin.Configuration.Settings.GeneralCommon.Translation.Info"] = "<p>Pre-translate functionality allows you to use third-party translation services such as <a href='https://cloud.google.com/translate' target='_blank'>Google's Cloud Translation</a> or <a href='https://www.deepl.com/products/api' target='_blank'>DeepL</a> to automatically translate localizable fields of entities such as products and their attributes, categories, manufacturers, etc.</p><p><strong>Note:</strong> This functionality will not change any translations that you have added, or edited, manually.</p>",
+            ["Admin.Common.PreTranslate"] = "Pre-translate",
+            ["Enums.Nop.Core.Domain.Translation.TranslationServiceType.GoogleTranslate"] = "Google Cloud Translate",
+            ["Enums.Nop.Core.Domain.Translation.TranslationServiceType.DeepL"] = "DeepL",
+            ["Admin.Translation.Translated"] = "pre-translate has been completed (all possible fields are pre-filled)",
         }, languageId);
 
         #endregion

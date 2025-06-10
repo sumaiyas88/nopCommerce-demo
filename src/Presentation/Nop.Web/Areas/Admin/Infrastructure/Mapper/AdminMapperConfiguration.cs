@@ -25,6 +25,7 @@ using Nop.Core.Domain.Shipping;
 using Nop.Core.Domain.Stores;
 using Nop.Core.Domain.Tax;
 using Nop.Core.Domain.Topics;
+using Nop.Core.Domain.Translation;
 using Nop.Core.Domain.Vendors;
 using Nop.Core.Infrastructure.Mapper;
 using Nop.Data.Configuration;
@@ -539,7 +540,8 @@ public partial class AdminMapperConfiguration : Profile, IOrderedMapperProfile
             .ForMember(model => model.TierPriceSearchModel, options => options.Ignore())
             .ForMember(model => model.SelectedProductTags, options => options.Ignore())
             .ForMember(model => model.AvailableProductTags, options => options.Ignore())
-            .ForMember(model => model.FormattedPrice, options => options.Ignore());
+            .ForMember(model => model.FormattedPrice, options => options.Ignore())
+            .ForMember(model => model.PreTranslationAvailable, options => options.Ignore());
         CreateMap<ProductModel, Product>()
             .ForMember(entity => entity.ApprovedRatingSum, options => options.Ignore())
             .ForMember(entity => entity.ApprovedTotalReviews, options => options.Ignore())
@@ -1098,6 +1100,10 @@ public partial class AdminMapperConfiguration : Profile, IOrderedMapperProfile
 
         CreateMap<LocaleResourceModel, LocaleStringResource>()
             .ForMember(entity => entity.LanguageId, options => options.Ignore());
+
+        CreateMap<TranslationSettings, TranslationSettingsModel>()
+            .ForMember(model => model.AvailableLanguages, options => options.Ignore())
+            .ForMember(model => model.AvailableTranslationService, options => options.Ignore());
     }
 
     /// <summary>

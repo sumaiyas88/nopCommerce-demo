@@ -84,6 +84,7 @@ using Nop.Web.Framework;
 using Nop.Web.Framework.Factories;
 using Nop.Web.Framework.Mvc.Routing;
 using Nop.Web.Framework.Themes;
+using Nop.Web.Framework.Translation;
 using Nop.Web.Framework.UI;
 using Nop.Web.Framework.WebOptimizer;
 using Nop.Web.Infrastructure.Installation;
@@ -330,6 +331,7 @@ public partial class BaseNopTest
         services.AddTransient<ILocalizationService, LocalizationService>();
         services.AddTransient<ILocalizedEntityService, LocalizedEntityService>();
         services.AddTransient(typeof(Lazy<ILocalizationService>));
+        services.AddScoped<ITranslationService, TranslationService>();
         services.AddTransient<IInstallationLocalizationService, InstallationLocalizationService>();
         services.AddTransient<ILanguageService, LanguageService>();
         services.AddTransient<IDownloadService, DownloadService>();

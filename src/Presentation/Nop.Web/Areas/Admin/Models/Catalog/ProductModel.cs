@@ -454,6 +454,8 @@ public partial record ProductModel : BaseNopEntityModel,
     //specification attributes
     public bool HasAvailableSpecificationAttributes { get; set; }
 
+    public bool PreTranslationAvailable { get; set; }
+
     //copy product
     public CopyProductModel CopyProductModel { get; set; }
 

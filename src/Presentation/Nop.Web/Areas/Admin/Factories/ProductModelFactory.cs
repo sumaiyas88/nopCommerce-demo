@@ -10,6 +10,7 @@ using Nop.Core.Domain.Directory;
 using Nop.Core.Domain.Discounts;
 using Nop.Core.Domain.Orders;
 using Nop.Core.Domain.Tax;
+using Nop.Core.Domain.Translation;
 using Nop.Core.Domain.Vendors;
 using Nop.Services.Catalog;
 using Nop.Services.Common;
@@ -51,6 +52,7 @@ public partial class ProductModelFactory : IProductModelFactory
     protected readonly IDateTimeHelper _dateTimeHelper;
     protected readonly IDiscountService _discountService;
     protected readonly IDiscountSupportedModelFactory _discountSupportedModelFactory;
+    protected readonly ILanguageService _languageService;
     protected readonly ILocalizationService _localizationService;
     protected readonly ILocalizedModelFactory _localizedModelFactory;
     protected readonly IManufacturerService _manufacturerService;
@@ -79,6 +81,7 @@ public partial class ProductModelFactory : IProductModelFactory
     protected readonly MeasureSettings _measureSettings;
     protected readonly NopHttpClient _nopHttpClient;
     protected readonly TaxSettings _taxSettings;
+    protected readonly TranslationSettings _translationSettings;
     protected readonly VendorSettings _vendorSettings;
 
     #endregion
@@ -95,6 +98,7 @@ public partial class ProductModelFactory : IProductModelFactory
         IDateTimeHelper dateTimeHelper,
         IDiscountService discountService,
         IDiscountSupportedModelFactory discountSupportedModelFactory,
+        ILanguageService languageService,
         ILocalizationService localizationService,
         ILocalizedModelFactory localizedModelFactory,
         IManufacturerService manufacturerService,
@@ -123,6 +127,7 @@ public partial class ProductModelFactory : IProductModelFactory
         MeasureSettings measureSettings,
         NopHttpClient nopHttpClient,
         TaxSettings taxSettings,
+        TranslationSettings translationSettings,
         VendorSettings vendorSettings)
     {
         _catalogSettings = catalogSettings;
@@ -135,6 +140,7 @@ public partial class ProductModelFactory : IProductModelFactory
         _dateTimeHelper = dateTimeHelper;
         _discountService = discountService;
         _discountSupportedModelFactory = discountSupportedModelFactory;
+        _languageService = languageService;
         _localizationService = localizationService;
         _localizedModelFactory = localizedModelFactory;
         _manufacturerService = manufacturerService;
@@ -163,6 +169,7 @@ public partial class ProductModelFactory : IProductModelFactory
         _measureSettings = measureSettings;
         _nopHttpClient = nopHttpClient;
         _taxSettings = taxSettings;
+        _translationSettings = translationSettings;
         _vendorSettings = vendorSettings;
     }
 
@@ -983,6 +990,14 @@ public partial class ProductModelFactory : IProductModelFactory
         
         //prepare model stores
         await _storeMappingSupportedModelFactory.PrepareModelStoresAsync(model, product, excludeProperties);
+
+        if (_translationSettings.AllowPreTranslate)
+        {
+            var allLanguages = await _languageService.GetAllLanguagesAsync();
+            model.PreTranslationAvailable = allLanguages.Count(l =>
+                !_translationSettings.NotTranslateLanguages.Contains(l.Id) &&
+                l.Id != _translationSettings.TranslateFromLanguageId) > 0;
+        }
 
         return model;
     }

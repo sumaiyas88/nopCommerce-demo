@@ -46,6 +46,8 @@ public partial record GeneralCommonSettingsModel : BaseNopModel, ISettingsModel
 
     public LocalizationSettingsModel LocalizationSettings { get; set; }
 
+    public TranslationSettingsModel TranslationSettings { get; set; }
+
     public DisplayDefaultMenuItemSettingsModel DisplayDefaultMenuItemSettings { get; set; }
 
     public DisplayDefaultFooterItemSettingsModel DisplayDefaultFooterItemSettings { get; set; }
