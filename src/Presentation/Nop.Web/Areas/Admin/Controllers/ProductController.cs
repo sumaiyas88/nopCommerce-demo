@@ -33,10 +33,10 @@ using Nop.Web.Areas.Admin.Factories;
 using Nop.Web.Areas.Admin.Infrastructure.Mapper.Extensions;
 using Nop.Web.Areas.Admin.Models.Catalog;
 using Nop.Web.Framework.Controllers;
+using Nop.Web.Framework.Factories;
 using Nop.Web.Framework.Mvc;
 using Nop.Web.Framework.Mvc.Filters;
 using Nop.Web.Framework.Mvc.ModelBinding;
-using Nop.Web.Framework.Translation;
 using Nop.Web.Framework.Validators;
 
 namespace Nop.Web.Areas.Admin.Controllers;
@@ -80,7 +80,7 @@ public partial class ProductController : BaseAdminController
     protected readonly IShoppingCartService _shoppingCartService;
     protected readonly ISpecificationAttributeService _specificationAttributeService;
     protected readonly IStoreContext _storeContext;
-    protected readonly ITranslationService _translationService;
+    protected readonly ITranslationFactory _translationService;
     protected readonly IUrlRecordService _urlRecordService;
     protected readonly IVideoService _videoService;
     protected readonly IWebHelper _webHelper;
@@ -129,7 +129,7 @@ public partial class ProductController : BaseAdminController
         IShoppingCartService shoppingCartService,
         ISpecificationAttributeService specificationAttributeService,
         IStoreContext storeContext,
-        ITranslationService translationService,
+        ITranslationFactory translationService,
         IUrlRecordService urlRecordService,
         IVideoService videoService,
         IWebHelper webHelper,
@@ -1005,11 +1005,6 @@ public partial class ProductController : BaseAdminController
         return View(model);
     }
 
-    public virtual async Task PreTranslate(ProductModel model)
-    {
-
-    }
-
     [HttpPost, ParameterBasedOnFormName("save-continue", "continueEditing")]
     [CheckPermission(StandardPermission.Catalog.PRODUCTS_CREATE_EDIT_DELETE)]
     public virtual async Task<IActionResult> Create(ProductModel model, bool continueEditing)
@@ -1115,24 +1110,24 @@ public partial class ProductController : BaseAdminController
         //try to get a product with the specified id
         var product = await _productService.GetProductByIdAsync(productId);
         if (product == null || product.Deleted)
-            return Ok(new {Locales = new Dictionary<string, string>()});
+            return Json(new { Locales = new Dictionary<string, string>() });
 
         //a vendor should have access only to his products
         var currentVendor = await _workContext.GetCurrentVendorAsync();
         if (currentVendor != null && product.VendorId != currentVendor.Id)
-            return Ok(new { Locales = new Dictionary<string, string>() });
+            return Json(new { Locales = new Dictionary<string, string>() });
 
         //prepare model
         var model = await _productModelFactory.PrepareProductModelAsync(null, product);
 
         var locales = await _translationService.TranslateAsync(model,
-        [
-            new (nameof(ProductLocalizedModel.Name)),
-            new (nameof(ProductLocalizedModel.ShortDescription)),
-            new (nameof(ProductLocalizedModel.FullDescription), true)
-        ]);
-        
-        return Ok(new { Locales = locales });
+
+            new ValueTuple<string, bool>(nameof(ProductLocalizedModel.Name), false),
+            new ValueTuple<string, bool>(nameof(ProductLocalizedModel.ShortDescription), false),
+            new ValueTuple<string, bool>(nameof(ProductLocalizedModel.FullDescription), true)
+        );
+
+        return Json(new { Locales = locales });
     }
 
 

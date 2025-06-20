@@ -1,25 +1,28 @@
-﻿@model GeneralCommonSettingsModel
+﻿@using Nop.Core.Domain.Translation
+@model GeneralCommonSettingsModel
 
-<script>
+<script asp-location="Footer">
     $(function() {
         $("#@Html.IdFor(model => model.TranslationSettings.TranslationServiceId)").change(function () {
             var selectedItem = $(this).val();
             showApiSetting(selectedItem);
         });
     });
-    $(document).ready(function () {
+
+    $(function () {
         showApiSetting($("#@Html.IdFor(model => model.TranslationSettings.TranslationServiceId)").val());
     });
+
     function showApiSetting(selectedItem)
     {        
         switch(selectedItem)
         {
-            case "0":
+            case "@((int)TranslationServiceType.GoogleTranslate)":
             {                
                 $("#pnlApiKey").show();
                 $("#pnlAuthKey").hide();
             }break;
-            case "1":
+            case "@((int)TranslationServiceType.DeepL)":
             {
                 $("#pnlApiKey").hide();
                 $("#pnlAuthKey").show();
@@ -57,16 +60,16 @@
                 <nop-select asp-for="TranslationSettings.NotTranslateLanguages" asp-items="Model.TranslationSettings.AvailableLanguages" asp-multiple="true" />
                 <script>
                         $(function() {
-                            var storesIdsInput = $('#@Html.IdFor(model => model.TranslationSettings.NotTranslateLanguages)').select2({
-                                closeOnSelect: false,
-                                @if (!Model.TranslationSettings.AvailableLanguages.Any())
-                                {
-                                    <text>
-                                disabled: true,
-                                placeholder: 'No languages available',
+                            var languagesIdsInput = $('#@Html.IdFor(model => model.TranslationSettings.NotTranslateLanguages)').select2({
+                            closeOnSelect: false,
+                            @if (!Model.TranslationSettings.AvailableLanguages.Any())
+                            {
+                                <text>
+                                    disabled: true,
+                                    placeholder: 'No languages available',
                                 </text>
-                                }
-                            });
+                            }
+                        });
                         });
                     </script>
                 <span asp-validation-for="TranslationSettings.NotTranslateLanguages"></span>

@@ -6,12 +6,12 @@ using Nop.Services.Localization;
 using Nop.Services.Logging;
 using Nop.Web.Framework.Models;
 
-namespace Nop.Web.Framework.Translation;
+namespace Nop.Web.Framework.Factories;
 
 /// <summary>
 /// Provides methods for translation
 /// </summary>
-public partial class TranslationService : ITranslationService
+public partial class TranslationFactory : ITranslationFactory
 {
     #region Fields
 
@@ -24,7 +24,7 @@ public partial class TranslationService : ITranslationService
 
     #region Ctor
 
-    public TranslationService(ILanguageService languageService, ILocalizationService localizationService, ILogger logger, TranslationSettings translationSettings)
+    public TranslationFactory(ILanguageService languageService, ILocalizationService localizationService, ILogger logger, TranslationSettings translationSettings)
     {
         _languageService = languageService;
         _localizationService = localizationService;
@@ -89,7 +89,7 @@ public partial class TranslationService : ITranslationService
     /// <param name="model">The localized model to translate</param>
     /// <param name="propertiesToTranslate">List of properties which should be translated</param>
     /// <returns>A task that represents the asynchronous operation</returns>
-    public async Task<Dictionary<string, string>> TranslateAsync<T>(ILocalizedModel<T> model, ITranslationService.PropertyToTranslate[] propertiesToTranslate) where T : ILocalizedLocaleModel
+    public async Task<Dictionary<string, string>> TranslateAsync<T>(ILocalizedModel<T> model, params (string PropertyName, bool IsHtml)[] propertiesToTranslate) where T : ILocalizedLocaleModel
     {
         var result = new Dictionary<string, string>();
 

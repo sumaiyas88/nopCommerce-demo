@@ -14,6 +14,8 @@ public partial record TranslationSettingsModel : BaseNopModel, ISettingsModel
     public TranslationSettingsModel()
     {
         AvailableLanguages = new List<SelectListItem>();
+        NotTranslateLanguages = new List<int>();
+        AvailableTranslationService = new List<SelectListItem>();
     }
 
     #endregion

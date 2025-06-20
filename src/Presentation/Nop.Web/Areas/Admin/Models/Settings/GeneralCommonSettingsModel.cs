@@ -18,6 +18,7 @@ public partial record GeneralCommonSettingsModel : BaseNopModel, ISettingsModel
         CaptchaSettings = new CaptchaSettingsModel();
         PdfSettings = new PdfSettingsModel();
         LocalizationSettings = new LocalizationSettingsModel();
+        TranslationSettings = new TranslationSettingsModel();
         DisplayDefaultMenuItemSettings = new DisplayDefaultMenuItemSettingsModel();
         DisplayDefaultFooterItemSettings = new DisplayDefaultFooterItemSettingsModel();
         AdminAreaSettings = new AdminAreaSettingsModel();

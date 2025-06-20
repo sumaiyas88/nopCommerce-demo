@@ -993,10 +993,10 @@ public partial class ProductModelFactory : IProductModelFactory
 
         if (_translationSettings.AllowPreTranslate)
         {
-            var allLanguages = await _languageService.GetAllLanguagesAsync();
-            model.PreTranslationAvailable = allLanguages.Count(l =>
+            var allLanguages = await _languageService.GetAllLanguagesAsync(showHidden: true);
+            model.PreTranslationAvailable = allLanguages.Any(l =>
                 !_translationSettings.NotTranslateLanguages.Contains(l.Id) &&
-                l.Id != _translationSettings.TranslateFromLanguageId) > 0;
+                l.Id != _translationSettings.TranslateFromLanguageId);
         }
 
         return model;

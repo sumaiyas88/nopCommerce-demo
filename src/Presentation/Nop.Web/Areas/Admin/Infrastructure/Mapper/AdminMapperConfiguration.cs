@@ -1100,10 +1100,6 @@ public partial class AdminMapperConfiguration : Profile, IOrderedMapperProfile
 
         CreateMap<LocaleResourceModel, LocaleStringResource>()
             .ForMember(entity => entity.LanguageId, options => options.Ignore());
-
-        CreateMap<TranslationSettings, TranslationSettingsModel>()
-            .ForMember(model => model.AvailableLanguages, options => options.Ignore())
-            .ForMember(model => model.AvailableTranslationService, options => options.Ignore());
     }
 
     /// <summary>

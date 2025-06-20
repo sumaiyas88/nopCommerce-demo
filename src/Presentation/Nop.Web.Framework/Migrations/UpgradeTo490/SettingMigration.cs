@@ -208,10 +208,20 @@ public class SettingMigration : MigrationBase
             translationSettings.GoogleApiKey = string.Empty;
             settingService.SaveSetting(translationSettings, settings => settings.GoogleApiKey);
         }
+        if (!settingService.SettingExists(translationSettings, settings => settings.DeepLAuthKey))
+        {
+            translationSettings.DeepLAuthKey = string.Empty;
+            settingService.SaveSetting(translationSettings, settings => settings.DeepLAuthKey);
+        }
         if (!settingService.SettingExists(translationSettings, settings => settings.NotTranslateLanguages))
         {
             translationSettings.NotTranslateLanguages = new List<int>();
             settingService.SaveSetting(translationSettings, settings => settings.NotTranslateLanguages);
+        }
+        if (!settingService.SettingExists(translationSettings, settings => settings.TranslationServiceId))
+        {
+            translationSettings.TranslationServiceId = 0;
+            settingService.SaveSetting(translationSettings, settings => settings.TranslationServiceId);
         }
     }
 

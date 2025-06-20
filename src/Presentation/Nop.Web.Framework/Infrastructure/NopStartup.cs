@@ -55,7 +55,6 @@ using Nop.Web.Framework.Factories;
 using Nop.Web.Framework.Menu;
 using Nop.Web.Framework.Mvc.Routing;
 using Nop.Web.Framework.Themes;
-using Nop.Web.Framework.Translation;
 using Nop.Web.Framework.UI;
 using TaskScheduler = Nop.Services.ScheduleTasks.TaskScheduler;
 
@@ -174,7 +173,6 @@ public partial class NopStartup : INopStartup
         services.AddScoped<IStoreMappingService, StoreMappingService>();
         services.AddScoped<IDiscountService, DiscountService>();
         services.AddScoped<ILocalizationService, LocalizationService>();
-        services.AddScoped<ITranslationService, TranslationService>();
         services.AddScoped<ILocalizedEntityService, LocalizedEntityService>();
         services.AddScoped<ILanguageService, LanguageService>();
         services.AddScoped<IDownloadService, DownloadService>();

@@ -1,4 +1,5 @@
-﻿@model string
+﻿@using Nop.Services.Messages
+@model string
 
 <button id="pre-translate" type="button" name="@Model" class="btn bg-olive">
     <i class="fas fa-globe"></i>
@@ -6,7 +7,7 @@
 </button>
 
 
-<script>
+<script asp-location="Footer">
     $(function() {
         $('#pre-translate').click(function () {
             var productId = $('#Id').val();
@@ -33,7 +34,7 @@
                           }
                         }
 
-                    displayBarNotification('@T("Admin.Translation.Translated")', 0);
+                    displayBarNotification('@T("Admin.Translation.Translated")', @((int)NotifyType.Success));
                 }
             });
         });
