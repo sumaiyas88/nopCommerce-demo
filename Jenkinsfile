@@ -8,11 +8,6 @@ pipeline {
     triggers {
         pollSCM('*/5 * * * *')
     }
-
-    tools {
-        dotnetsdk 'DOTNET9'  // Make sure this tool is configured in Jenkins global tools
-    }
-
     stages {
         stage('SCM') {  // Stage names must be strings
             steps {
