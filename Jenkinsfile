@@ -20,15 +20,15 @@ pipeline {
             steps {
                 sh 'dotnet restore src/Presentation/Nop.Web/Nop.Web.csproj'
                 sh 'dotnet build -c Release src/Presentation/Nop.Web/Nop.Web.csproj'
-                sh 'mkdir -p published1 && dotnet publish -o ./published1 -c Release src/Presentation/Nop.Web/Nop.Web.csproj'
+                sh 'mkdir -p published2 && dotnet publish -o ./published2 -c Release src/Presentation/Nop.Web/Nop.Web.csproj'
             }
         }
 	}
         post {
             success {
-            zip zipFile: './published1.zip',
+            zip zipFile: './published2.zip',
                 archive: true,
-                dir: './published1'
+                dir: './published2'
             }
         }
 }
