@@ -1,7 +1,7 @@
 pipeline {
     agent {label 'Dotnet9'}
     options {
-        timeout(time: 1, unit: 'Hours')
+        timeout(time: 1, unit: 'HOURS')
     }
     triggers {
         pollSCM ('*/5 * * * *')
@@ -20,7 +20,7 @@ pipeline {
             steps {
                 sh 'dotnet restore src/Presentation/Nop.Web/Nop.Web.csproj'
                 sh 'dotnet build -c Release src/Presentation/Nop.Web/Nop.Web.csproj'
-                sh 'mkdir published && dotnet publish -o ./published -c Release src/Presentation/Nop.Web/Nop.Web.csproj'
+                sh 'mkdir -p published && dotnet publish -o ./published -c Release src/Presentation/Nop.Web/Nop.Web.csproj'
             }
         }
             post {
