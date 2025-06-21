@@ -1,37 +1,34 @@
 pipeline {
     agent { label 'Dotnet9' }
-
     options {
-        timeout(time: 1, unit: 'HOURS')  // Use uppercase for unit
+        timeout(time: 1, unit: 'HOURS')
     }
-
     triggers {
         pollSCM('*/5 * * * *')
     }
+    tools {
+        dotnetsdk 'DOTNET9'
+    }
     stages {
-        stage('SCM') {  // Stage names must be strings
+        stage(SCM) {
             steps {
                 git url: 'https://github.com/sumaiyas88/nopCommerce-demo.git',
                     branch: 'develop'
             }
         }
-
-        stage('Build') {
+        stage(Build) {
             steps {
                 sh 'dotnet restore src/Presentation/Nop.Web/Nop.Web.csproj'
                 sh 'dotnet build -c Release src/Presentation/Nop.Web/Nop.Web.csproj'
                 sh 'mkdir -p published && dotnet publish -o ./published -c Release src/Presentation/Nop.Web/Nop.Web.csproj'
             }
         }
-    }
-
-    post {
-        success {
-            // Zip the published folder (requires Pipeline Utility Steps plugin)
-            zip zipFile: 'published.zip', dir: 'published'
-
-            // Archive the zip file as an artifact
-            archiveArtifacts artifacts: 'published.zip', fingerprint: true
+	}
+        post {
+            success {
+            zip zipFile: './published.zip',
+                archive: true,
+                dir: './published'
+            }
         }
-    }
 }
