@@ -10,13 +10,13 @@ pipeline {
         dotnetsdk 'DOTNET9'
     }
     stages {
-        stage(SCM) {
+        stage('SCM') {
             steps {
                 git url: 'https://github.com/sumaiyas88/nopCommerce-demo.git',
                     branch: 'develop'
             }
         }
-        stage(Build) {
+        stage('Build') {
             steps {
                 sh 'dotnet restore src/Presentation/Nop.Web/Nop.Web.csproj'
                 sh 'dotnet build -c Release src/Presentation/Nop.Web/Nop.Web.csproj'
